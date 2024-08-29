@@ -11,7 +11,7 @@ import {
 import { Dispatch, SetStateAction } from "react";
 
 function App() {
-    const getRowSum = (row: TableCell[]) => row.reduce((sum, item) => sum + item.value, 0);
+    const getRowSum = (row: TableCell[]) => row.reduce((sum, item) => sum + item?.value, 0);
 
     const getColumnAverage = (tableData:  TableCell[][], colIndex: number) => {
         const columnSum = tableData.reduce((sum, row) => sum + row[colIndex].value, 0);
