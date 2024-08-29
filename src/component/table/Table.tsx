@@ -1,4 +1,4 @@
-import {ComponentPropsWithoutRef, FC, memo, ReactNode, useRef, useState} from 'react';
+import {ComponentPropsWithoutRef, FC, memo, ReactNode, useState} from 'react';
 import { TableContext, useTableContext } from "./TableProvider.tsx";
 import { TableProvider } from "./types.ts";
 

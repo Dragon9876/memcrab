@@ -1,1 +1,1 @@
-export const getUniqueId = (rowIndex, colIndex) => `cell-${rowIndex}-${colIndex}`;
+export const getUniqueId = (rowIndex: number, colIndex: number) => `cell-${rowIndex}-${colIndex}`;
