@@ -1,0 +1,83 @@
+import { FC, memo, useState } from "react";
+import { getRandomNumber, getUniqueId } from "../../helpers";
+import {SelectedRowsType, SetSelectedRowsType, SetTableDataType} from "../table/types.ts";
+
+interface InputTableProps {
+    setTableData: SetTableDataType,
+    selectedRows: SelectedRowsType,
+    setSelectedRows: SetSelectedRowsType,
+}
+
+export const InputTable: FC<InputTableProps> = memo(({ setTableData, selectedRows, setSelectedRows }) => {
+    const [rows, setRows] = useState(0);
+    const [columns, setColumns] = useState(0);
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        setTableData(
+            Array.from({ length: rows }, (_, rowIndex) =>
+                Array.from({ length: columns }, (_, colIndex) => ({
+                    id: getUniqueId(rowIndex, colIndex),
+                    value: getRandomNumber()
+                }))
+            )
+        );
+
+        setRows(0);
+        setColumns(0);
+    };
+
+    const handleDelete = (e) => {
+        e.preventDefault();
+
+        if(selectedRows.length == 0) return;
+
+        setTableData(prevDataTable => prevDataTable.filter((row, rowIndex) => !selectedRows.includes(rowIndex)));
+        setSelectedRows([]);
+    }
+
+    const handleAddNewRow = (e) => {
+        e.preventDefault();
+
+        setTableData(prevData => {
+            const newRowIndex = prevData.length;
+            const newRow = Array.from({ length: (prevData[0]?.length || 0) }, (_, colIndex) => ({
+                id: getUniqueId(newRowIndex, colIndex),
+                value: getRandomNumber()
+            }));
+
+            return [...prevData, newRow];
+        });
+    }
+
+    return <>
+        <form onSubmit={handleSubmit} style={{display: 'flex', columnGap: '10px', justifyContent: 'flex-end', padding: '15px 0px'}}>
+            <label>
+                Rows:
+                <input
+                    value={rows}
+                    min={0}
+                    max={100}
+                    type="number"
+                    name="rows"
+                    onChange={(event) => setRows(parseInt(event.target.value))}
+                />
+            </label>
+            <label>
+                Columns:
+                <input
+                    value={columns}
+                    min={0}
+                    max={100}
+                    type="number"
+                    name="columns"
+                    onChange={(event) => setColumns(parseInt(event.target.value))}
+                />
+            </label>
+            <button type='submit'>Generate</button>
+            <button onClick={handleDelete}>Delete</button>
+            <button onClick={handleAddNewRow}>Add new row</button>
+        </form>
+    </>
+});
