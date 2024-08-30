@@ -1,7 +1,14 @@
 import type { FC, ReactNode, CSSProperties } from 'react';
 import { useState, memo } from 'react';
 import { TableContext, useTableContext } from "./TableProvider.tsx";
-import type { TableProvider, PreviousRowIdType, PreviousRowType, HighlightedCellsType, TableDataType, SelectedRowsType } from "./types.ts";
+import type {
+    TableProvider,
+    HoveredRowType,
+    HighlightedCellsType,
+    TableDataType,
+    SelectedRowsType,
+    HoveredRowIdType
+} from "./types.ts";
 
 
 interface TypeTableTopProps {
@@ -34,8 +41,8 @@ interface TypeTableCellProps {
 }
 
 const TableContainer: FC<TypeTableContainerProps> = memo(({ children }) => {
-    const [previousRowId, setPreviousRowId] = useState<PreviousRowIdType>(-1);
-    const [previousRow, setPreviousRow] = useState<PreviousRowType>([]);
+    const [hoveredRowId, setHoveredRowId] = useState<HoveredRowIdType>(-1);
+    const [hoveredRow, setHoveredRow] = useState<HoveredRowType>([]);
     const [highlightedCells, setHighlightedCells] = useState<HighlightedCellsType>(new Set());
     const [tableData, setTableData] = useState<TableDataType>([[]]);
     const [selectedRows, setSelectedRows] = useState<SelectedRowsType>([]);
@@ -47,10 +54,10 @@ const TableContainer: FC<TypeTableContainerProps> = memo(({ children }) => {
         setSelectedRows,
         highlightedCells,
         setHighlightedCells,
-        previousRow,
-        setPreviousRow,
-        previousRowId,
-        setPreviousRowId,
+        hoveredRow,
+        setHoveredRow,
+        hoveredRowId,
+        setHoveredRowId,
     }}>
         {children}
     </TableContext.Provider>

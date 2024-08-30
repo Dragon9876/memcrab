@@ -7,16 +7,16 @@ export type TableProvider = {
     setSelectedRows: SetSelectedRowsType,
     tableData: TableDataType,
     setTableData: SetTableDataType,
-    previousRow: PreviousRowType,
-    setPreviousRow: SetPreviousRowType,
-    previousRowId: PreviousRowIdType,
-    setPreviousRowId: SetPreviousRowIdType,
+    hoveredRow: HoveredRowType,
+    setHoveredRow: SetHoveredRowType,
+    hoveredRowId: HoveredRowIdType,
+    setHoveredRowId: SetHoveredRowIdType,
 };
 
-export type PreviousRowIdType = number;
-export type SetPreviousRowIdType = Dispatch<number>;
-export type SetPreviousRowType = Dispatch<TableCell[]>;
-export type PreviousRowType = TableCell[];
+export type HoveredRowIdType = number;
+export type SetHoveredRowIdType = Dispatch<number>;
+export type SetHoveredRowType = Dispatch<TableCell[]>;
+export type HoveredRowType = TableCell[];
 export type HighlightedCellsType = Set<string>;
 export type SetHighlightedCellsType = Dispatch<SetStateAction<HighlightedCellsType>>;
 export type SetSelectedRowsType = Dispatch<SetStateAction<number[]>>;

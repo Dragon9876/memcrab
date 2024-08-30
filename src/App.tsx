@@ -1,9 +1,8 @@
 import './App.css'
-import { Table } from "./component/table/Table.tsx";
-import { InputTable } from "./component/inputTable/InputTable.tsx";
+import { InputTable, Table } from "./component";
 import {
-    PreviousRowType,
-    SelectedRowsType, SetHighlightedCellsType, SetPreviousRowIdType, SetPreviousRowType,
+    HoveredRowType,
+    SelectedRowsType, SetHighlightedCellsType, SetHoveredRowIdType, SetHoveredRowType,
     SetSelectedRowsType, SetTableDataType,
     TableCell,
     TableDataType
@@ -57,9 +56,9 @@ function App() {
         setHighlightedCells(new Set(closestCellIds));
     };
 
-    const handleSumHover = (tableData: TableDataType, setTableData: SetTableDataType, rowIndex: number, setPreviousRow: SetPreviousRowType, setPreviousRowId: SetPreviousRowIdType) => {
-        setPreviousRowId(rowIndex);
-        setPreviousRow(tableData[rowIndex]);
+    const handleSumHover = (tableData: TableDataType, setTableData: SetTableDataType, rowIndex: number, setHoveredRow: SetHoveredRowType, setHoveredRowId: SetHoveredRowIdType) => {
+        setHoveredRowId(rowIndex);
+        setHoveredRow(tableData[rowIndex]);
 
         setTableData(prevData =>
             prevData.map((row, rIdx) =>
@@ -73,17 +72,17 @@ function App() {
         );
     }
 
-    const handleSumHoverOut = (setTableData: SetTableDataType, rowIndex: number, previousRow: PreviousRowType, setPreviousRow: SetPreviousRowType, setPreviousRowId: SetPreviousRowIdType) => {
+    const handleSumHoverOut = (setTableData: SetTableDataType, rowIndex: number, hoveredRow: HoveredRowType, setHoveredRow: SetHoveredRowType, setHoveredRowId: SetHoveredRowIdType) => {
         setTableData(prevData =>
             prevData.map((row, rIdx) =>
                 rIdx === rowIndex
-                    ? previousRow
+                    ? hoveredRow
                     : row
             )
         );
 
-        setPreviousRow([]);
-        setPreviousRowId(-1);
+        setHoveredRow([]);
+        setHoveredRowId(-1);
     }
 
     return (
@@ -110,7 +109,7 @@ function App() {
                 </Table.TableHeader>
                 <Table.TableBody>
                     {
-                        ({ previousRowId, setPreviousRowId, setPreviousRow, previousRow, tableData, setTableData, setSelectedRows, selectedRows , highlightedCells, setHighlightedCells}) => {
+                        ({ hoveredRowId, setHoveredRowId, setHoveredRow, hoveredRow, tableData, setTableData, setSelectedRows, selectedRows , highlightedCells, setHighlightedCells}) => {
                             return <>
                                 {
                                     tableData.map((tableRow, rowIndex) => (
@@ -123,7 +122,7 @@ function App() {
                                                 <Table.TableCell
                                                     key={tableCell.id}
                                                     style={{
-                                                        backgroundColor: rowIndex === previousRowId
+                                                        backgroundColor: rowIndex === hoveredRowId
                                                             ? `rgba(255, 0, 0, ${tableCell.value / 100})` // Red background with opacity based on value
                                                             : highlightedCells.has(tableCell.id)
                                                                 ? 'yellow'
@@ -135,17 +134,17 @@ function App() {
                                                         onMouseOver={() => handleCellHover(tableCell, tableData, setHighlightedCells)}
                                                         onMouseLeave={() => setHighlightedCells(new Set())}
                                                     >
-                                                        {tableCell.value}
+                                                        {tableCell.value}{ hoveredRowId != -1 && rowIndex === hoveredRowId ? '%' : ''}
                                                     </button>
                                                 </Table.TableCell>
                                             ))}
 
                                             <Table.TableCell>
                                                 <button
-                                                    onMouseOver={() => handleSumHover(tableData, setTableData, rowIndex, setPreviousRow, setPreviousRowId)}
-                                                    onMouseLeave={() => handleSumHoverOut(setTableData, rowIndex, previousRow, setPreviousRow, setPreviousRowId)}
+                                                    onMouseOver={() => handleSumHover(tableData, setTableData, rowIndex, setHoveredRow, setHoveredRowId)}
+                                                    onMouseLeave={() => handleSumHoverOut(setTableData, rowIndex, hoveredRow, setHoveredRow, setHoveredRowId)}
                                                 >
-                                                    {getRowSum(tableRow)}
+                                                    {getRowSum(tableRow)}{ hoveredRowId != -1 && rowIndex === hoveredRowId ? '%' : ''}
                                                 </button>
                                             </Table.TableCell>
                                         </Table.TableRow>
