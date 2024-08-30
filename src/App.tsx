@@ -73,7 +73,7 @@ function App() {
         );
     }
 
-    const handleSumHoverOut = (tableData: TableDataType, setTableData: SetTableDataType, rowIndex: number, previousRow: PreviousRowType, setPreviousRow: SetPreviousRowType, setPreviousRowId: SetPreviousRowIdType) => {
+    const handleSumHoverOut = (setTableData: SetTableDataType, rowIndex: number, previousRow: PreviousRowType, setPreviousRow: SetPreviousRowType, setPreviousRowId: SetPreviousRowIdType) => {
         setTableData(prevData =>
             prevData.map((row, rIdx) =>
                 rIdx === rowIndex
@@ -87,7 +87,6 @@ function App() {
     }
 
     return (
-    <>
         <Table>
             <Table.TableTop>
                 {({ setTableData, selectedRows, setSelectedRows }) => {
@@ -102,7 +101,7 @@ function App() {
                             <Table.TableCell isHeader></Table.TableCell>
                             <Table.TableCell isHeader>Checkbox</Table.TableCell>
                             {
-                                tableData[0]?.map((row, columnIndex) => <Table.TableCell key={columnIndex} isHeader>N = {columnIndex}</Table.TableCell>)
+                                tableData[0]?.map((_, columnIndex) => <Table.TableCell key={columnIndex} isHeader>N = {columnIndex}</Table.TableCell>)
                             }
 
                             <Table.TableCell isHeader>Sum values</Table.TableCell>
@@ -144,7 +143,7 @@ function App() {
                                             <Table.TableCell>
                                                 <button
                                                     onMouseOver={() => handleSumHover(tableData, setTableData, rowIndex, setPreviousRow, setPreviousRowId)}
-                                                    onMouseLeave={() => handleSumHoverOut(tableData, setTableData, rowIndex, previousRow, setPreviousRow, setPreviousRowId)}
+                                                    onMouseLeave={() => handleSumHoverOut(setTableData, rowIndex, previousRow, setPreviousRow, setPreviousRowId)}
                                                 >
                                                     {getRowSum(tableRow)}
                                                 </button>
@@ -169,7 +168,6 @@ function App() {
                 </Table.TableBody>
             </Table.TableInner>
         </Table>
-    </>
   )
 }
 

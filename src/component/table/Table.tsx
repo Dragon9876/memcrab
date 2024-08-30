@@ -1,35 +1,44 @@
-import { ComponentPropsWithoutRef, FC, memo, ReactNode, useState } from 'react';
+import type { FC, ReactNode, CSSProperties } from 'react';
+import { useState, memo } from 'react';
 import { TableContext, useTableContext } from "./TableProvider.tsx";
-import { TableProvider } from "./types.ts";
+import type { TableProvider, PreviousRowIdType, PreviousRowType, HighlightedCellsType, TableDataType, SelectedRowsType } from "./types.ts";
 
-type ChildrenFunctionType = (params: TableProvider) => ReactNode;
 
-interface ITableProps<T> extends ComponentPropsWithoutRef<T> {
-    children: ReactNode,
+interface TypeTableTopProps {
+    children: (params: TableProvider) => ReactNode; 
 }
 
-interface TypeTableTopProps extends ComponentPropsWithoutRef<'div'> {
-    children: ChildrenFunctionType
+interface TypeTableBodyProps {
+    children: (params: TableProvider) => ReactNode; 
+}
+interface TypeTableHeaderProps {
+    children: (params: TableProvider) => ReactNode; 
 }
 
-interface TypeTableBodyProps extends ComponentPropsWithoutRef<'tbody'> {
-    children: ChildrenFunctionType
+interface TypeTableContainerProps {
+    children: ReactNode; 
+};
+
+interface TypeTableProps {
+    children: ReactNode; 
+};
+
+interface TypeTableRowProps  {
+    children: ReactNode; 
+};
+
+interface TypeTableCellProps {
+    children?: ReactNode; 
+    style?: CSSProperties,
+    isHeader?: boolean
 }
 
-interface TypeTableHeaderProps extends ComponentPropsWithoutRef<'thead'> {
-    children: ChildrenFunctionType
-}
-
-type TypeTableContainerProps = ITableProps<'div'>;
-type TypeTableProps = ITableProps<'table'>;
-type TypeTableRowProps = ITableProps<'tr'>;
-
-const TableContainer: FC<TypeTableContainerProps> = memo(({ children}) => {
-    const [previousRowId, setPreviousRowId] = useState(-1);
-    const [previousRow, setPreviousRow] = useState([]);
-    const [highlightedCells, setHighlightedCells] = useState(new Set());
-    const [tableData, setTableData] = useState([[]]);
-    const [selectedRows, setSelectedRows] = useState([]);
+const TableContainer: FC<TypeTableContainerProps> = memo(({ children }) => {
+    const [previousRowId, setPreviousRowId] = useState<PreviousRowIdType>(-1);
+    const [previousRow, setPreviousRow] = useState<PreviousRowType>([]);
+    const [highlightedCells, setHighlightedCells] = useState<HighlightedCellsType>(new Set());
+    const [tableData, setTableData] = useState<TableDataType>([[]]);
+    const [selectedRows, setSelectedRows] = useState<SelectedRowsType>([]);
 
     return <TableContext.Provider value={{
         tableData,
@@ -47,7 +56,7 @@ const TableContainer: FC<TypeTableContainerProps> = memo(({ children}) => {
     </TableContext.Provider>
 })
 
-const TableTop: FC<TypeTableTopProps> = memo(({ children}) => {
+const TableTop: FC<TypeTableTopProps> = memo(({ children }) => {
     const context = useTableContext();
     return <div>
         {children(context)}
@@ -56,13 +65,13 @@ const TableTop: FC<TypeTableTopProps> = memo(({ children}) => {
 
 // Table Component
 const TableInner: FC<TypeTableProps> = memo(({ children }) => {
-    return <table style={{ width: '100%', borderCollapse: 'collapse' }}>{children}</table>;
+    return <table style={{ width: '100%', borderCollapse: 'collapse' }}>{ children }</table>;
 });
 
 // TableHeader Component
 const TableHeader: FC<TypeTableHeaderProps> = memo(({ children }) => {
     const context = useTableContext();
-    return <thead style={{ backgroundColor: '#f2f2f2' }}>{children(context)}</thead>;
+    return <thead style={{ backgroundColor: '#f2f2f2' }}>{ children(context) }</thead>;
 });
 
 // TableBody Component
@@ -77,7 +86,7 @@ const TableRow: FC<TypeTableRowProps> = memo(({ children, ...rest }) => {
 });
 
 // TableCell Component
-const TableCell: FC<{ children: ReactNode; isHeader?: boolean }> = memo(({ children, isHeader, style, ...rest }) => {
+const TableCell: FC<TypeTableCellProps> = memo(({ children, isHeader, style, ...rest }) => {
     return isHeader ? (
         <th style={{ color: 'black', border: '1px solid #ddd', padding: '8px', ...style }} {...rest}>{children}</th>
     ) : (

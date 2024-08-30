@@ -1,2 +1,2 @@
 
-export const getRandomNumber = () => Math.floor(100 + Math.random() * 900);
+export const getRandomNumber = (): number => Math.floor(100 + Math.random() * 900);

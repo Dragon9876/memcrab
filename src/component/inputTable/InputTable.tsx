@@ -1,4 +1,5 @@
-import { FC, memo, useState } from "react";
+import type { FC, FormEvent, MouseEvent } from "react";
+import { memo, useState } from "react";
 import { getRandomNumber, getUniqueId } from "../../helpers";
 import {SelectedRowsType, SetSelectedRowsType, SetTableDataType} from "../table/types.ts";
 
@@ -12,7 +13,7 @@ export const InputTable: FC<InputTableProps> = memo(({ setTableData, selectedRow
     const [rows, setRows] = useState(0);
     const [columns, setColumns] = useState(0);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         setTableData(
@@ -28,17 +29,17 @@ export const InputTable: FC<InputTableProps> = memo(({ setTableData, selectedRow
         setColumns(0);
     };
 
-    const handleDelete = (e) => {
-        e.preventDefault();
+    const handleDelete = (event: MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
 
         if(selectedRows.length == 0) return;
 
-        setTableData(prevDataTable => prevDataTable.filter((row, rowIndex) => !selectedRows.includes(rowIndex)));
+        setTableData(prevDataTable => prevDataTable.filter((_, rowIndex) => !selectedRows.includes(rowIndex)));
         setSelectedRows([]);
     }
 
-    const handleAddNewRow = (e) => {
-        e.preventDefault();
+    const handleAddNewRow = (event: MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
 
         setTableData(prevData => {
             const newRowIndex = prevData.length;
