@@ -77,7 +77,7 @@ export const InputTable: FC<InputTableProps> = memo(({ setTableData, selectedRow
                 />
             </label>
             <button type='submit'>Generate</button>
-            <button onClick={handleDelete}>Delete</button>
+            <button disabled={!selectedRows.length} onClick={handleDelete}>Delete</button>
             <button onClick={handleAddNewRow}>Add new row</button>
         </form>
     </>
