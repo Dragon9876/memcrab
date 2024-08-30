@@ -10,8 +10,9 @@ interface InputTableProps {
 }
 
 export const InputTable: FC<InputTableProps> = memo(({ setTableData, selectedRows, setSelectedRows }) => {
-    const [rows, setRows] = useState(0);
-    const [columns, setColumns] = useState(0);
+    const [rows, setRows] = useState<number>(0);
+    const [columns, setColumns] = useState<number>(0);
+    const [isTableGenerated, setIsTableGenerated] = useState<boolean>(false);
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -27,6 +28,7 @@ export const InputTable: FC<InputTableProps> = memo(({ setTableData, selectedRow
 
         setRows(0);
         setColumns(0);
+        setIsTableGenerated(true);
     };
 
     const handleDelete = (event: MouseEvent<HTMLButtonElement>) => {
@@ -78,7 +80,7 @@ export const InputTable: FC<InputTableProps> = memo(({ setTableData, selectedRow
             </label>
             <button type='submit'>Generate</button>
             <button disabled={!selectedRows.length} onClick={handleDelete}>Delete</button>
-            <button onClick={handleAddNewRow}>Add new row</button>
+            <button disabled={!isTableGenerated} onClick={handleAddNewRow}>Add new row</button>
         </form>
     </>
 });
