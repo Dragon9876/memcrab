@@ -44,7 +44,7 @@ const TableContainer: FC<TypeTableContainerProps> = memo(({ children }) => {
     const [hoveredRowId, setHoveredRowId] = useState<HoveredRowIdType>(-1);
     const [hoveredRow, setHoveredRow] = useState<HoveredRowType>([]);
     const [highlightedCells, setHighlightedCells] = useState<HighlightedCellsType>(new Set());
-    const [tableData, setTableData] = useState<TableDataType>([[]]);
+    const [tableData, setTableData] = useState<TableDataType>([]);
     const [selectedRows, setSelectedRows] = useState<SelectedRowsType>([]);
 
     return <TableContext.Provider value={{

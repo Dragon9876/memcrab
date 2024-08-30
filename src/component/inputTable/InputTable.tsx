@@ -28,7 +28,7 @@ export const InputTable: FC<InputTableProps> = memo(({ setTableData, selectedRow
 
         setRows(0);
         setColumns(0);
-        setIsTableGenerated(true);
+        setIsTableGenerated(rows > 0 && columns > 0);
     };
 
     const handleDelete = (event: MouseEvent<HTMLButtonElement>) => {

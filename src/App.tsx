@@ -96,7 +96,7 @@ function App() {
             <Table.TableInner>
                 <Table.TableHeader>
                     {({ tableData }) => {
-                        return <Table.TableRow>
+                        return tableData.length != 0 && <Table.TableRow>
                             <Table.TableCell isHeader></Table.TableCell>
                             <Table.TableCell isHeader>Checkbox</Table.TableCell>
                             {
@@ -110,7 +110,7 @@ function App() {
                 <Table.TableBody>
                     {
                         ({ hoveredRowId, setHoveredRowId, setHoveredRow, hoveredRow, tableData, setTableData, setSelectedRows, selectedRows , highlightedCells, setHighlightedCells}) => {
-                            return <>
+                            return tableData.length != 0 && <>
                                 {
                                     tableData.map((tableRow, rowIndex) => (
                                         <Table.TableRow key={rowIndex}>
