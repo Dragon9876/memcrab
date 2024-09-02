@@ -46,7 +46,7 @@ function App() {
         const closestCells = values
             .map(value => ({ value, diff: Math.abs(value - hoveredCell.value) }))
             .sort((a, b) => a.diff - b.diff)
-            .slice(1, 4)
+            .slice(1, 5)
             .map(item => item.value);
 
         const closestCellIds = tableData.flatMap(row =>
