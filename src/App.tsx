@@ -1,23 +1,22 @@
 import './App.css'
-import { InputTable, Table } from "./component";
+import { TopTable, Table } from "./components";
 import {
     HoveredRowType,
     SelectedRowsType, SetHighlightedCellsType, SetHoveredRowIdType, SetHoveredRowType,
     SetSelectedRowsType, SetTableDataType,
     TableCell,
     TableDataType
-} from "./component/table/types.ts";
-import { Dispatch, SetStateAction } from "react";
+} from "./components/table/types.ts";
 
 function App() {
     const getRowSum = (row: TableCell[]) => row.reduce((sum, item) => sum + item?.value, 0);
 
-    const getColumnAverage = (tableData:  TableCell[][], colIndex: number) => {
+    const getColumnAverage = (tableData:  TableDataType, colIndex: number) => {
         const columnSum = tableData.reduce((sum, row) => sum + row[colIndex].value, 0);
         return columnSum / 2;
     };
 
-    const handleCellClick = (setTableData: Dispatch<SetStateAction<TableCell[][]>>, rowIndex: number, colIndex: number) => {
+    const handleCellClick = (setTableData: SetTableDataType, rowIndex: number, colIndex: number) => {
         setTableData(prevData =>
             prevData.map((row, rIdx) =>
                 row.map((cell, cIdx) =>
@@ -89,7 +88,7 @@ function App() {
         <Table>
             <Table.TableTop>
                 {({ setTableData, selectedRows, setSelectedRows }) => {
-                    return <InputTable setTableData={setTableData} selectedRows={selectedRows} setSelectedRows={setSelectedRows}  />
+                    return <TopTable setTableData={setTableData} selectedRows={selectedRows} setSelectedRows={setSelectedRows}  />
                 }}
             </Table.TableTop>
 

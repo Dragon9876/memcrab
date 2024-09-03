@@ -9,7 +9,7 @@ interface InputTableProps {
     setSelectedRows: SetSelectedRowsType,
 }
 
-export const InputTable: FC<InputTableProps> = memo(({ setTableData, selectedRows, setSelectedRows }) => {
+export const TopTable: FC<InputTableProps> = memo(({ setTableData, selectedRows, setSelectedRows }) => {
     const [rows, setRows] = useState<number>(0);
     const [columns, setColumns] = useState<number>(0);
     const [isTableGenerated, setIsTableGenerated] = useState<boolean>(false);

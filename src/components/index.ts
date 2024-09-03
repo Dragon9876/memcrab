@@ -1,7 +1,7 @@
 import { Table } from "./table/Table";
-import { InputTable } from "./inputTable/InputTable";
+import { TopTable } from "./topTable/TopTable.tsx";
 
 export {
     Table,
-    InputTable
+    TopTable
 }
