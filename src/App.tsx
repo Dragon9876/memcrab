@@ -153,11 +153,13 @@ function App() {
                                 <Table.TableRow>
                                     <Table.TableCell>Average values</Table.TableCell>
                                     <Table.TableCell></Table.TableCell>
-                                    { Array.from({ length: tableData[0]?.length || 0 }, (_, colIndex) => (
-                                        <Table.TableCell key={colIndex}>
-                                            {getColumnAverage(tableData, colIndex)}
-                                        </Table.TableCell>
-                                    ))}
+                                    {
+                                        tableData[0]?.map((_, columnIndex) => <Table.TableCell key={columnIndex}>
+                                                {getColumnAverage(tableData, columnIndex)}
+                                            </Table.TableCell>
+                                        )
+                                    }
+                        
                                     <Table.TableCell></Table.TableCell>
                                 </Table.TableRow>
                             </>
